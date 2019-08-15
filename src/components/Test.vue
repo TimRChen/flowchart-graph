@@ -1,6 +1,11 @@
 <template>
     <div class="hello">
-        <div class="item" v-for="(node, index) in nodes" :key="index">
+        <div
+            class="item"
+            v-for="(node, index) in nodes"
+            :data-id="node.id"
+            :key="index"
+        >
             <div class="desc">{{ node.desc }}</div>
             <div class="title">{{ node.title }}</div>
         </div>
@@ -19,7 +24,8 @@ export default {
     data() {
         return {
             container: {},
-            nodes: nodes
+            nodes,
+            // nodes: nodes.sort(() => Math.random() * 10 > 5 ? -1 : 1) // random list
         };
     },
     mounted() {
@@ -29,7 +35,7 @@ export default {
             style: {
                 width: "100vw",
                 height: "100vh",
-                border: "10px solid #000"
+                border: "1px solid #000"
             },
             line: {
                 style: {
@@ -52,12 +58,21 @@ export default {
         this.intiialLayout(this.nodes);
     },
     methods: {
+        findRoot(nodes) {
+            const rootNode = nodes.find(node => {
+                if (node.children.length > 0) {
+                    const index = nodes.findIndex(n => node.parent === n.id);
+                    return index === -1;
+                }
+            });
+            return rootNode;
+        },
         findChilds(nodes, node) {
             // 此 node 具备两个条件：1. 它是当前父节点下的子节点 2. 它有子节点
             // 目标：将它下列的所有子孙节点找出
             let cs = [];
             const childs = nodes.filter(n => {
-                if (n.source === node.id) {
+                if (n.parent === node.id) {
                     if (n.children.length > 0) {
                         cs = this.findChilds(nodes, n);
                     }
@@ -68,74 +83,56 @@ export default {
         },
         intiialLayout(nodes) {
             // 找出根节点
-            const rootNode = nodes.find(node => {
-                if (node.children.length > 0) {
-                    const index = nodes.findIndex(
-                        n => node.children.indexOf(n.id) !== -1
-                    );
-                    // debugger
-                    if (index !== -1) {
-                        return node;
-                    }
-                    // TODO: find root!
-                    // let result = nodes.reduce((acc, curv) => {
-                    //     if (
-                    //         acc.children.length > 0 &&
-                    //         node.children.indexOf(acc.id) !== -1
-                    //     ) {
-                    //         return acc;
-                    //     } else {
-                    //         return curv;
-                    //     }
-                    // });
-                    // debugger
-                    // return result;
-                }
-            });
-            // debugger;
-            const rootNodeExistIndex = this.container.nodes.findIndex(
+            const rootNode = this.findRoot(nodes);
+            // 判断根节点是否已存在
+            const rootIndex = this.container.nodes.findIndex(
                 node => node.id === rootNode.id
             );
-            if (rootNodeExistIndex === -1) {
+            if (rootIndex === -1) {
+                // 若根节点不存在则创建
                 this.createNode(rootNode);
             }
-            // 将后续子孙节点注入队列中
+            // 筛选子节点
+            const childNodes = nodes.filter(
+                node => node.parent === rootNode.id
+            );
+            // 将后续子孙节点注入递归队列中
             let nodeQueue = [];
-            nodes.forEach(node => {
-                if (node.source === rootNode.id) {
+            childNodes.forEach(node => {
+                if (node.parent === rootNode.id) {
                     if (node.children.length > 0) {
-                        let list = nodes.filter(
+                        let list = childNodes.filter(
                             n => node.children.indexOf(n.id) !== -1
                         );
-                        const childs = this.findChilds(nodes, node);
+                        const childs = this.findChilds(this.nodes, node);
                         list = Array.from(new Set([node, ...list, ...childs]));
                         nodeQueue.push(list);
-                        // debugger;
                     }
                 }
             });
-            // debugger;
-            // 筛选子节点
-            const childNodes = nodes.filter(
-                node => node.source === rootNode.id
-            );
-            // 创建子节点
+
+            // 创建子节点并初始化位置
+            let lastLen = 0;
             childNodes.forEach((node, index) => {
                 const len = node.children.length;
                 // 根据子节点个数生成父节点位置
-                if (len > 0) {
+                if (len >= 1 && lastLen > 0) {
+                    // debugger;
                     node.position = this.initialPosition(
                         node,
                         rootNode,
-                        index + (len % index)
+                        lastLen
                     );
                 } else {
                     node.position = this.initialPosition(node, rootNode, index);
                 }
+                lastLen = len + index;
                 this.createNode(node);
             });
+
             // 绘制连接
             this.drawLink(childNodes, rootNode);
+
             // 递归子节点包含有子孙节点情况
             if (nodeQueue.length > 0) {
                 nodeQueue.forEach(list => {
@@ -146,11 +143,11 @@ export default {
         /**
          * 初始化position属性
          */
-        initialPosition(node, rootNode, index) {
+        initialPosition(node, rootNode, len) {
             const baseWidth = width + width / 2;
             const baseHeight = height + height / 2;
             const { x: baseX, y: baseY } = rootNode.position;
-            node.position.x = baseX + baseWidth * index;
+            node.position.x = baseX + baseWidth * len;
             node.position.y = baseY + baseHeight;
             return node.position;
         },
@@ -177,7 +174,8 @@ export default {
          * 创建节点
          */
         createNode(node) {
-            const htmlData = document.querySelector(".item");
+            const domSelectors = `.item[data-id="${node.id}"]`;
+            const htmlData = document.querySelector(domSelectors);
             let nodeInstance = new Node({
                 position: node.position,
                 style: {
@@ -201,10 +199,10 @@ export default {
 div.item {
     width: 100px;
     height: 100px;
-    color: black;
+    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    background-color: #9c3;
+    background-color: #000;
     border-radius: 4px;
     display: flex;
     flex-flow: column;

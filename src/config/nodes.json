@@ -5,7 +5,7 @@
         "desc": "level",
         "position": { "x": 50, "y": 100 },
         "children": [222, 333, 444, 555],
-        "source": -1
+        "parent": null
     },
     {
         "id": 222,
@@ -13,15 +13,61 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 111
+        "parent": 111
     },
     {
         "id": 333,
         "title": "1-2",
         "desc": "level",
         "position": { "x": 0, "y": 0 },
+        "children": [
+            43509809,
+            43509808,
+            4350980891,
+            43509808123,
+            4350980891424
+        ],
+        "parent": 111
+    },
+    {
+        "id": 43509809,
+        "title": "1-2-1",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 111
+        "parent": 333
+    },
+    {
+        "id": 43509808,
+        "title": "1-2-2",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
+        "children": [],
+        "parent": 333
+    },
+    {
+        "id": 4350980891,
+        "title": "1-2-3",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
+        "children": [],
+        "parent": 333
+    },
+    {
+        "id": 43509808123,
+        "title": "1-2-4",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
+        "children": [],
+        "parent": 333
+    },
+    {
+        "id": 4350980891424,
+        "title": "1-2-5",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
+        "children": [],
+        "parent": 333
     },
     {
         "id": 444,
@@ -29,15 +75,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [2234, 2235],
-        "source": 111
-    },
-    {
-        "id": 555,
-        "title": "1-4",
-        "desc": "level",
-        "position": { "x": 0, "y": 0 },
-        "children": [1234, 1235, 1236, 1237],
-        "source": 111
+        "parent": 111
     },
     {
         "id": 2234,
@@ -45,7 +83,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 444
+        "parent": 444
     },
     {
         "id": 2235,
@@ -53,7 +91,15 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 444
+        "parent": 444
+    },
+    {
+        "id": 555,
+        "title": "1-4",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
+        "children": [1234, 1235, 1236, 1237],
+        "parent": 111
     },
     {
         "id": 1234,
@@ -61,7 +107,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 555
+        "parent": 555
     },
     {
         "id": 1235,
@@ -69,15 +115,23 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 555
+        "parent": 555
     },
     {
         "id": 1236,
         "title": "1-4-3",
         "desc": "level",
         "position": { "x": 0, "y": 0 },
+        "children": [3292],
+        "parent": 555
+    },
+    {
+        "id": 3292,
+        "title": "1-4-3-1",
+        "desc": "level",
+        "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 555
+        "parent": 1236
     },
     {
         "id": 1237,
@@ -85,7 +139,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [3236, 3237],
-        "source": 555
+        "parent": 555
     },
     {
         "id": 3236,
@@ -93,7 +147,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 1237
+        "parent": 1237
     },
     {
         "id": 3237,
@@ -101,7 +155,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [4234, 4235],
-        "source": 1237
+        "parent": 1237
     },
     {
         "id": 4234,
@@ -109,7 +163,7 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 3237
+        "parent": 3237
     },
     {
         "id": 4235,
@@ -117,6 +171,6 @@
         "desc": "level",
         "position": { "x": 0, "y": 0 },
         "children": [],
-        "source": 3237
+        "parent": 3237
     }
 ]
