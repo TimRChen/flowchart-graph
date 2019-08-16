@@ -24,8 +24,8 @@ export default {
     data() {
         return {
             container: {},
-            nodes,
-            // nodes: nodes.sort(() => Math.random() * 10 > 5 ? -1 : 1) // random list
+            // nodes,
+            nodes: nodes.sort(() => (Math.random() * 10 > 5 ? -1 : 1)) // random list
         };
     },
     mounted() {
@@ -111,22 +111,22 @@ export default {
                 }
             });
 
-            // 创建子节点并初始化位置
-            let lastLen = 0;
+            // 创建子节点并初始化位置 TODO: position is the key.
+            let lastNodeLen = 0;
             childNodes.forEach((node, index) => {
                 const len = node.children.length;
                 // 根据子节点个数生成父节点位置
-                if (len >= 1 && lastLen > 0) {
-                    // debugger;
+                if (len >= 1 && lastNodeLen > 0) {
                     node.position = this.initialPosition(
                         node,
                         rootNode,
-                        lastLen
+                        lastNodeLen
                     );
                 } else {
                     node.position = this.initialPosition(node, rootNode, index);
                 }
-                lastLen = len + index;
+                // debugger;
+                lastNodeLen += len + index;
                 this.createNode(node);
             });
 
