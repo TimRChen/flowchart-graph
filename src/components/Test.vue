@@ -9,7 +9,15 @@
             <div class="desc">{{ node.desc }}</div>
             <div class="title">{{ node.title }}</div>
         </div>
-        <svg id="container"></svg>
+        <div class="node-zone">
+            <svg
+                id="container"
+                width="2000"
+                height="1000"
+                viewBox="0 0 1000 1000"
+                preserveAspectRatio="xMinYMin meet"
+            ></svg>
+        </div>
     </div>
 </template>
 
@@ -17,8 +25,8 @@
 import { Core, Node, Edge } from "flowchart-core";
 import nodes from "../config/nodes.json";
 
-const width = 100;
-const height = 100;
+const width = 50;
+const height = 50;
 
 export default {
     data() {
@@ -33,9 +41,8 @@ export default {
 
         this.container = new Core(svgContainer, {
             style: {
-                width: "100vw",
-                height: "100vh",
-                border: "1px solid #000"
+                border: "1px solid #000",
+                overflow: "scroll"
             },
             line: {
                 style: {
@@ -51,7 +58,7 @@ export default {
             linkDot: {
                 display: "none"
             },
-            control: true // must need. default is false 是否可配置流程
+            mode: "link-mode" // must need. default is render-mode 是否可配置流程
         });
 
         // 初始化节点布局
@@ -114,20 +121,19 @@ export default {
             // 创建子节点并初始化位置 TODO: position is the key.
             let lastNodeLen = 0;
             childNodes.forEach((node, index) => {
+                const nodeInstance = this.createNode(node);
                 const len = node.children.length;
                 // 根据子节点个数生成父节点位置
                 if (len >= 1 && lastNodeLen > 0) {
-                    node.position = this.initialPosition(
-                        node,
-                        rootNode,
-                        lastNodeLen
+                    nodeInstance.changePosition(
+                        this.initialPosition(node, rootNode, lastNodeLen)
                     );
                 } else {
-                    node.position = this.initialPosition(node, rootNode, index);
+                    nodeInstance.changePosition(
+                        this.initialPosition(node, rootNode, index)
+                    );
                 }
-                // debugger;
                 lastNodeLen += len + index;
-                this.createNode(node);
             });
 
             // 绘制连接
@@ -144,30 +150,27 @@ export default {
          * 初始化position属性
          */
         initialPosition(node, rootNode, len) {
-            const baseWidth = width + width / 2;
-            const baseHeight = height + height / 2;
+            const baseWidth = width * 2;
+            const baseHeight = height * 2;
             const { x: baseX, y: baseY } = rootNode.position;
-            node.position.x = baseX + baseWidth * len;
-            node.position.y = baseY + baseHeight;
+            const xPosition = baseX + baseWidth * len;
+            const yPosition = baseY + baseHeight;
+            node.position.x = xPosition;
+            node.position.y = yPosition;
             return node.position;
         },
         /**
          * 绘制连接关系
          */
         drawLink(nodes, rootNode) {
-            const self = this;
             nodes.forEach(node => {
-                let edge = new Edge();
-                Object.assign(edge, {
+                const edge = new Edge();
+                this.container.addEdge(edge, {
                     source: rootNode.id,
                     target: node.id,
                     dotLink: "bottom",
                     dotEndLink: "top"
                 });
-                edge.lineData = self.container.edgeData(edge);
-
-                self.container.edges = [edge, ...self.container.edges];
-                self.container.edgeG.appendChild(edge.edge);
             });
         },
         /**
@@ -190,6 +193,7 @@ export default {
             });
             Object.assign(nodeInstance, node);
             this.container.addNode(nodeInstance);
+            return nodeInstance;
         }
     }
 };
@@ -197,10 +201,10 @@ export default {
 
 <style scoped>
 div.item {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     color: #fff;
-    font-size: 24px;
+    font-size: 12px;
     font-weight: bold;
     background-color: #000;
     border-radius: 4px;
@@ -208,5 +212,10 @@ div.item {
     flex-flow: column;
     align-items: center;
     justify-content: center;
+}
+
+div.node-zone {
+    width: 100%;
+    overflow: scroll;
 }
 </style>

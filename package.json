@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "flowchart-core": "^1.0.4",
+    "flowchart-core": "^1.0.5",
     "vue": "^2.6.10"
   },
   "devDependencies": {
