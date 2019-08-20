@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "d3-zoom": "^1.8.3",
     "flowchart-core": "^1.0.5",
     "vue": "^2.6.10"
   },

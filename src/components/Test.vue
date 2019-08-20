@@ -12,8 +12,8 @@
         <div class="node-zone">
             <svg
                 id="container"
-                width="2000"
-                height="1000"
+                width="100vw"
+                height="100vh"
                 viewBox="0 0 1000 1000"
                 preserveAspectRatio="xMinYMin meet"
             ></svg>
@@ -23,6 +23,8 @@
 
 <script>
 import { Core, Node, Edge } from "flowchart-core";
+import * as d3 from "d3-selection";
+import * as d3Zoom from "d3-zoom";
 import nodes from "../config/nodes.json";
 
 const width = 50;
@@ -33,7 +35,8 @@ export default {
         return {
             container: {},
             // nodes,
-            nodes: nodes.sort(() => (Math.random() * 10 > 5 ? -1 : 1)) // random list
+            // nodes: nodes.sort(() => (Math.random() * 10 > 5 ? -1 : 1)) // random list
+            nodes: nodes.sort((a, b) => (a.title > b.title ? 1 : -1)) // 排序
         };
     },
     mounted() {
@@ -57,14 +60,29 @@ export default {
             linkDot: {
                 display: "none"
             },
-            mode: "link-mode" // must need. default is render-mode 是否可配置流程
+            mode: "render-mode" // must need. default is render-mode 是否可配置流程
         });
         // eslint-disable-next-line no-console
         console.log(this.nodes);
         // 初始化节点布局
         this.initialLayout(this.nodes);
+        // 初始化缩放
+        this.initialZoom(); // TODO: could disabled.
     },
     methods: {
+        initialZoom() {
+            const svg = d3.select("svg"); // TODO: configurable
+            const g = d3.selectAll("g").filter(".graph, .edges");
+            const zoomRange = [0.5, 8];
+            svg.call(
+                d3Zoom
+                    .zoom()
+                    .scaleExtent(zoomRange)
+                    .on("zoom", () => {
+                        g.attr("transform", d3.event.transform);
+                    })
+            );
+        },
         findRoot(nodes) {
             const rootNode = nodes.find(node => {
                 if (node.children.length > 0) {
