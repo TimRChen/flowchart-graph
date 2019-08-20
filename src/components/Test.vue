@@ -38,7 +38,6 @@ export default {
     },
     mounted() {
         const svgContainer = document.getElementById("container");
-
         this.container = new Core(svgContainer, {
             style: {
                 border: "1px solid #000",
@@ -60,9 +59,10 @@ export default {
             },
             mode: "link-mode" // must need. default is render-mode 是否可配置流程
         });
-
+        // eslint-disable-next-line no-console
+        console.log(this.nodes);
         // 初始化节点布局
-        this.intiialLayout(this.nodes);
+        this.initialLayout(this.nodes);
     },
     methods: {
         findRoot(nodes) {
@@ -88,7 +88,7 @@ export default {
             });
             return Array.from(new Set([...childs, ...cs]));
         },
-        intiialLayout(nodes) {
+        initialLayout(nodes) {
             // 找出根节点
             const rootNode = this.findRoot(nodes);
             // 判断根节点是否已存在
@@ -118,22 +118,46 @@ export default {
                 }
             });
 
-            // 创建子节点并初始化位置 TODO: position is the key.
+            // 创建子节点并初始化位置 position is the key.
             let lastNodeLen = 0;
             childNodes.forEach((node, index) => {
                 const nodeInstance = this.createNode(node);
                 const len = node.children.length;
                 // 根据子节点个数生成父节点位置
-                if (len >= 1 && lastNodeLen > 0) {
-                    nodeInstance.changePosition(
-                        this.initialPosition(node, rootNode, lastNodeLen)
+                if (len >= 1) {
+                    // 明确子节点的子节点的子节点的个数
+                    const bratNodes = this.nodes.filter(n => {
+                        if (node.children.indexOf(n.id) !== -1) {
+                            return n;
+                        }
+                    });
+                    const bratChildrensLen = bratNodes.reduce((acc, curv) => {
+                        if (curv.children.length > 0) {
+                            return acc + curv.children.length;
+                        } else {
+                            return acc;
+                        }
+                    }, 0);
+                    const position = this.initialPosition(
+                        node,
+                        rootNode,
+                        lastNodeLen
                     );
+                    nodeInstance.changePosition(position);
+                    if (len > 1) {
+                        lastNodeLen += len + bratChildrensLen;
+                    } else {
+                        lastNodeLen += 1;
+                    }
                 } else {
-                    nodeInstance.changePosition(
-                        this.initialPosition(node, rootNode, index)
+                    const position = this.initialPosition(
+                        node,
+                        rootNode,
+                        index
                     );
+                    nodeInstance.changePosition(position);
+                    lastNodeLen += 1;
                 }
-                lastNodeLen += len + index;
             });
 
             // 绘制连接
@@ -142,7 +166,7 @@ export default {
             // 递归子节点包含有子孙节点情况
             if (nodeQueue.length > 0) {
                 nodeQueue.forEach(list => {
-                    this.intiialLayout(list);
+                    this.initialLayout(list);
                 });
             }
         },
