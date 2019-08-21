@@ -3,10 +3,6 @@
       "id": "43509809",
       "title": "1-2-1",
       "desc": "level",
-      "position": {
-        "x": 50,
-        "y": 300
-      },
       "children": [],
       "parent": "333"
     },
@@ -14,10 +10,6 @@
       "id": "3237",
       "title": "1-4-4-2",
       "desc": "level",
-      "position": {
-        "x": 1350,
-        "y": 400
-      },
       "children": [
         "4234",
         "4235"
@@ -28,10 +20,6 @@
       "id": "333",
       "title": "1-2",
       "desc": "level",
-      "position": {
-        "x": 50,
-        "y": 200
-      },
       "children": [
         "43509809",
         "43509808",
@@ -45,10 +33,6 @@
       "id": "4350980891",
       "title": "1-2-3",
       "desc": "level",
-      "position": {
-        "x": 150,
-        "y": 300
-      },
       "children": [],
       "parent": "333"
     },
@@ -56,10 +40,6 @@
       "id": "1235",
       "title": "1-4-2",
       "desc": "level",
-      "position": {
-        "x": 1150,
-        "y": 300
-      },
       "children": [],
       "parent": "555"
     },
@@ -67,10 +47,6 @@
       "id": "222",
       "title": "1-1",
       "desc": "level",
-      "position": {
-        "x": 150,
-        "y": 200
-      },
       "children": [],
       "parent": "111"
     },
@@ -78,10 +54,6 @@
       "id": "4350980891424",
       "title": "1-2-5",
       "desc": "level",
-      "position": {
-        "x": 250,
-        "y": 300
-      },
       "children": [],
       "parent": "333"
     },
@@ -89,10 +61,6 @@
       "id": "111",
       "title": "0",
       "desc": "level",
-      "position": {
-        "x": 50,
-        "y": 100
-      },
       "children": [
         "222",
         "333",
@@ -105,10 +73,6 @@
       "id": "555",
       "title": "1-4",
       "desc": "level",
-      "position": {
-        "x": 1150,
-        "y": 200
-      },
       "children": [
         "1234",
         "1235",
@@ -121,10 +85,6 @@
       "id": "4234",
       "title": "1-4-4-2-1",
       "desc": "level",
-      "position": {
-        "x": 1350,
-        "y": 500
-      },
       "children": [],
       "parent": "3237"
     },
@@ -132,10 +92,6 @@
       "id": "2234",
       "title": "1-3-1",
       "desc": "level",
-      "position": {
-        "x": 1950,
-        "y": 300
-      },
       "children": [],
       "parent": "444"
     },
@@ -143,10 +99,6 @@
       "id": "1236",
       "title": "1-4-3",
       "desc": "level",
-      "position": {
-        "x": 1250,
-        "y": 300
-      },
       "children": [
         "3292"
       ],
@@ -156,10 +108,6 @@
       "id": "43509808123",
       "title": "1-2-4",
       "desc": "level",
-      "position": {
-        "x": 350,
-        "y": 300
-      },
       "children": [],
       "parent": "333"
     },
@@ -167,10 +115,6 @@
       "id": "444",
       "title": "1-3",
       "desc": "level",
-      "position": {
-        "x": 1950,
-        "y": 200
-      },
       "children": [
         "2234",
         "2235"
@@ -181,10 +125,6 @@
       "id": "3292",
       "title": "1-4-3-1",
       "desc": "level",
-      "position": {
-        "x": 1250,
-        "y": 400
-      },
       "children": [],
       "parent": "1236"
     },
@@ -192,10 +132,6 @@
       "id": "4235",
       "title": "1-4-4-2-2",
       "desc": "level",
-      "position": {
-        "x": 1450,
-        "y": 500
-      },
       "children": [],
       "parent": "3237"
     },
@@ -203,10 +139,6 @@
       "id": "43509808",
       "title": "1-2-2",
       "desc": "level",
-      "position": {
-        "x": 450,
-        "y": 300
-      },
       "children": [],
       "parent": "333"
     },
@@ -214,10 +146,6 @@
       "id": "2235",
       "title": "1-3-2",
       "desc": "level",
-      "position": {
-        "x": 2050,
-        "y": 300
-      },
       "children": [],
       "parent": "444"
     },
@@ -225,10 +153,6 @@
       "id": "1237",
       "title": "1-4-4",
       "desc": "level",
-      "position": {
-        "x": 1350,
-        "y": 300
-      },
       "children": [
         "3236",
         "3237"
@@ -239,10 +163,6 @@
       "id": "1234",
       "title": "1-4-1",
       "desc": "level",
-      "position": {
-        "x": 1450,
-        "y": 300
-      },
       "children": [],
       "parent": "555"
     },
@@ -250,10 +170,6 @@
       "id": "3236",
       "title": "1-4-4-1",
       "desc": "level",
-      "position": {
-        "x": 1450,
-        "y": 400
-      },
       "children": [],
       "parent": "1237"
     }
